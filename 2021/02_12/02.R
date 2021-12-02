@@ -17,7 +17,6 @@ tibble(
   separate(txt, into = c("direction", "units"), sep = "\\s") |>
   mutate(
     units = as.integer(units),
-    orientation = if_else(direction == "forward", "horizontal", "depth"),
     aim = cumsum(case_when(
       direction == "down" ~ units,
       direction == "up" ~ units * (-1L),
