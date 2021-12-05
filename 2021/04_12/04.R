@@ -25,13 +25,9 @@ board_win_when <- function(df_board) {
     for (j in seq_len(nrow(df_board))) {
       if (all(df_board[j, ] %in% numbers_seq)) {
         return(i)
-        break
       }
-    }
-    for (j in seq_len(ncol(df_board))) {
       if (all(pull(df_board[, j]) %in% numbers_seq)) {
         return(i)
-        break
       }
     }
   }
