@@ -1,29 +1,7 @@
 library(tidyverse)
+library(glue)
 
-input <- read_lines("2021/08_12/input_ex.txt")
-
-# 1: Nur 2 Buchsaben
-# 2: 5 umgedreht
-# 3
-# 4
-# 5: 6 ohne einen
-# 6: 8 ohne a
-
-# ###pos_1###
-# pos_2#pos_3
-# ###pos_4###
-# pos_5#pos_6
-# ###pos_7###
-
-# pos_1 -> 7 ohne 1 -> "d"
-# pos_2 -> 
-# pos_3 -> 6 oder 9 Unterschied zur 8 -> "b"
-
-df_numbers <- tibble(txt = c(
-  "acedgfb: 8", "cdfbe: 5", "gcdfa: 2", "fbcad: 3", "dab: 7", "cefabd: 9",
-  "cdfgeb: 6", "eafb: 4", "cagedb: 0", "ab: 1")) |>
-  separate(txt, into = c("digits", "number"), sep = ": ") |>
-  mutate(digits = map(digits, ~ str_split(.x, "")[[1]]))
+input <- read_lines("2021/08_12/input.txt")
 
 df_signal_output <- tibble(txt = input) |>
   separate(txt, into = c("signal", "output"), sep = " \\| ") |>
@@ -52,27 +30,27 @@ decode_digits <- function(test) {
   dig_9 <- union(dig_3, dig_4)
   dig_0 <- test |>
     filter(
-      anz_digits == 6, !map_lgl(digits, ~ all(.x %in% dig_9)),
+      anz_digits == 6, !map_lgl(digits, ~ setequal(.x, dig_9)),
       map_lgl(digits, ~ all(dig_1 %in% .x))) |>
     pull(digits) |>
     first()
   dig_6 <- test |>
     filter(
       anz_digits == 6,
-      map_lgl(digits, ~ all(.x %in% dig_9) | all(.x %in% dig_0))) |>
+      !map_lgl(digits, ~ setequal(.x, dig_9) || setequal(.x, dig_0))) |>
     pull(digits) |>
     first()
   
   dig_5 <- test |>
     filter(
-      anz_digits == 5, !map_lgl(digits, ~ all(.x %in% dig_3)),
+      anz_digits == 5, !map_lgl(digits, ~ setequal(.x, dig_3)),
       map_lgl(digits, ~ length(union(dig_9, .x)) == length(dig_9))) |>
     pull(digits) |>
     first()
   dig_2 <- test |>
     filter(
       anz_digits == 5,
-      !map_lgl(digits, ~ all(.x %in% dig_3) || all(.x %in% dig_5))) |>
+      !map_lgl(digits, ~ setequal(.x, dig_3) || setequal(.x, dig_5))) |>
     pull(digits) |>
     first()
   
@@ -92,10 +70,10 @@ df_output <- df_signal_output |>
   mutate(digits = str_split(value, ""))
 
 df_output |>
-  left_join(df_signal_decoded) |>
+  left_join(df_signal_decoded, by = "id") |>
   unnest(decoded_signal) |>
-  filter(map2_lgl(digits, dec_digit, ~ setequal(.y, .x)))
-
-test$dec_digit[[2]]
-test$dec_digit[[3]]
+  filter(map2_lgl(digits, dec_digit, ~ setequal(.y, .x))) |>
+  group_by(id) |>
+  summarise(number = as.integer(glue_collapse(number))) |>
+  summarise(erg = sum(number))
          
