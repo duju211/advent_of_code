@@ -3,7 +3,7 @@ library(tidygraph)
 library(tidyverse)
 library(igraph)
 
-input <- read_lines("2021/12_12/input_ex1.txt")
+input <- read_lines("2021/12_12/input_ex2.txt")
 
 df_edges <- tibble(txt = input) |>
   separate(col = txt, into = c("from", "to"), sep = "-")
@@ -26,4 +26,4 @@ df_edges_ind <- df_edges_pro |>
 
 graph <- tbl_graph(nodes = df_nodes, edges = df_edges_ind, directed = TRUE)
 
-graph
+convert(graph, to_unfolded_tree, root = 1, mode = "all")
