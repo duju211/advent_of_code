@@ -21,7 +21,9 @@ coord_fold <- function(df_coord, dec_var, fold_line) {
     group_by(id) |>
     filter(value[row_col == dec_var] > fold_line) |>
     ungroup() |> 
-    mutate(value = if_else(row_col == dec_var, max(value[row_col == dec_var]) + 1L - value, value))
+    mutate(
+      value = if_else(
+        row_col == dec_var, max(value[row_col == dec_var]) + 1L - value, value))
   
   df_coord |>
     group_by(id) |>
@@ -51,5 +53,7 @@ for (i in ind:nrow(df_fold_instructions)) {
 
 df_erg <- df_new_fold %>%
   pivot_wider(names_from = row_col, values_from = value) %>%
+  arrange(col) %>%
   mutate(id = "x") %>% 
-  pivot_wider(names_from = col, values_from = id)
+  pivot_wider(names_from = col, values_from = id) %>%
+  arrange(row)
