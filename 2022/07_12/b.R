@@ -63,8 +63,14 @@ df_res_graph <- res_graph |>
         }
       }))
 
-df_res_graph |>
+df_res_dirs <- df_res_graph |>
   as_tibble() |>
-  filter(dir_file == "dirs", total_size <= 100000) |>
+  filter(dir_file == "dirs")
+
+unused_space <- 70000000 - max(df_res_dirs$total_size)
+at_least_to_delete <- 30000000 - unused_space
+
+df_res_dirs |>
+  filter(total_size >= at_least_to_delete) |>
   pull(total_size) |>
-  sum()
+  min()
