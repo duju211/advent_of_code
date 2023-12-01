@@ -13,6 +13,7 @@ editor_options:
   chunk_output_type: console
 repository_url: https://github.com/duju211/advent_of_code
 base_url: https://www.datannery.com/posts/advent_of_code/
+creative_commons: CC BY
 ---
 
 ```{r setup, include=FALSE}
