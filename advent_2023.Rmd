@@ -1,19 +1,19 @@
 ---
 title: "Advent of Code"
 description: |
-  A new article created using the Distill format.
+  My attempts on the yearly Coding Competition
 author:
   - name: Julian During
     url: www.datannery.com
 date: "`r Sys.Date()`"
 output: distill::distill_article
+creative_commons: CC BY
 params:
   interactive: TRUE
 editor_options: 
   chunk_output_type: console
 repository_url: https://github.com/duju211/advent_of_code
 base_url: https://www.datannery.com/posts/advent_of_code/
-creative_commons: CC BY
 ---
 
 ```{r setup, include=FALSE}
