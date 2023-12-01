@@ -1,0 +1,60 @@
+---
+title: "Advent of Code"
+description: |
+  A new article created using the Distill format.
+author:
+  - name: Julian During
+    url: www.datannery.com
+date: "`r Sys.Date()`"
+output: distill::distill_article
+params:
+  interactive: TRUE
+editor_options: 
+  chunk_output_type: console
+repository_url: https://github.com/duju211/advent_of_code
+base_url: https://www.datannery.com/posts/advent_of_code/
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+source(here::here("setup.R"))
+```
+
+# Idea
+
+Advent of code is a annual coding competition. In the following I want to
+briefly discuss my solutions and hopefully get as far as possible :-).
+
+The following libraries are used to solve the challenges:
+
+```{r, eval=FALSE}
+library(tidyverse)
+```
+
+
+## Day 1
+
+In part one we are told to get the first and last digit from a string.
+Combine these and add them together.
+
+```{r, file=here::here("R", "trebuchet.R")}
+```
+
+For the 'training' data this looks like this:
+
+```{r, echo=FALSE}
+tar_read(df_trebuchet_train)
+```
+
+For the second part, numbers can also be represented as words. The code
+for this solution looks like this:
+
+```{r, file="R/trebuchet_2.R"}
+```
+
+For the training data the result looks like this:
+
+```{r, echo=FALSE}
+tar_read(df_trebuchet_2_train)
+```
