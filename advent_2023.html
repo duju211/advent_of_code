@@ -94,8 +94,8 @@ code span.wa { color: #5e5e5e; font-style: italic; }
 
 
   <!--  https://schema.org/Article -->
-  <meta property="article:published" itemprop="datePublished" content="2023-12-01" />
-  <meta property="article:created" itemprop="dateCreated" content="2023-12-01" />
+  <meta property="article:published" itemprop="datePublished" content="2023-12-02" />
+  <meta property="article:created" itemprop="dateCreated" content="2023-12-02" />
   <meta name="article:author" content="Julian During" />
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
@@ -113,7 +113,7 @@ code span.wa { color: #5e5e5e; font-style: italic; }
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output","creative_commons","params","editor_options","repository_url","base_url"]}},"value":[{"type":"character","attributes":{},"value":["Advent of Code"]},{"type":"character","attributes":{},"value":["My attempts on the yearly Coding Competition\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Julian During"]},{"type":"character","attributes":{},"value":["www.datannery.com"]}]}]},{"type":"character","attributes":{},"value":["2023-12-01"]},{"type":"character","attributes":{},"value":["distill::distill_article"]},{"type":"character","attributes":{},"value":["CC BY"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["interactive"]}},"value":[{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"character","attributes":{},"value":["https://github.com/duju211/advent_of_code"]},{"type":"character","attributes":{},"value":["https://www.datannery.com/posts/advent_of_code/"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output","creative_commons","params","editor_options","repository_url","base_url"]}},"value":[{"type":"character","attributes":{},"value":["Advent of Code"]},{"type":"character","attributes":{},"value":["My attempts on the yearly Coding Competition\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Julian During"]},{"type":"character","attributes":{},"value":["www.datannery.com"]}]}]},{"type":"character","attributes":{},"value":["2023-12-02"]},{"type":"character","attributes":{},"value":["distill::distill_article"]},{"type":"character","attributes":{},"value":["CC BY"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["interactive"]}},"value":[{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["chunk_output_type"]}},"value":[{"type":"character","attributes":{},"value":["console"]}]},{"type":"character","attributes":{},"value":["https://github.com/duju211/advent_of_code"]},{"type":"character","attributes":{},"value":["https://www.datannery.com/posts/advent_of_code/"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -2361,7 +2361,7 @@ distill-header .nav a {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Advent of Code","description":"My attempts on the yearly Coding Competition","authors":[{"author":"Julian During","authorURL":"www.datannery.com","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2023-12-01T00:00:00.000+01:00","citationText":"During, 2023"}
+{"title":"Advent of Code","description":"My attempts on the yearly Coding Competition","authors":[{"author":"Julian During","authorURL":"www.datannery.com","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2023-12-02T00:00:00.000+01:00","citationText":"During, 2023"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2381,7 +2381,7 @@ distill-header .nav a {
 <div class="d-byline">
   Julian During www.datannery.com 
   
-<br />2023-12-01
+<br />2023-12-02
 </div>
 
 <div class="d-article">
@@ -2468,7 +2468,82 @@ for this solution looks like this:</p>
 6 xtwone3four      2     4                24
 7 zoneight234      1     4                14</code></pre>
 </div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<h2 id="day-2">Day 2</h2>
+<p>First extract each game:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class="va">games</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>line <span class="op">=</span> <span class="va">input</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>      game_nr <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span><span class="va">line</span>, <span class="st">&quot;Game \\d+&quot;</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>      game_string <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trim.html">str_trim</a></span><span class="op">(</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split</a></span><span class="op">(</span><span class="va">line</span>, <span class="st">&quot;:&quot;</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>      game <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split</a></span><span class="op">(</span><span class="va">game_string</span>, <span class="st">&quot;;&quot;</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">game_nr</span>, <span class="va">game_string</span>, <span class="va">game</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre>
+</div>
+</div>
+<p>From the game data extract each round:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class="va">rounds</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df_games</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">df_rounds</span> <span class="op">&lt;-</span> <span class="va">df_games</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html">unnest</a></span><span class="op">(</span><span class="va">game</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/transmute.html">transmute</a></span><span class="op">(</span></span>
+<span>      <span class="va">game_nr</span>,</span>
+<span>      round_txt <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trim.html">str_trim</a></span><span class="op">(</span><span class="va">game</span><span class="op">)</span>,</span>
+<span>      red <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span><span class="va">round_txt</span>, <span class="st">&quot;\\d+ red&quot;</span><span class="op">)</span>,</span>
+<span>      green <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span><span class="va">round_txt</span>, <span class="st">&quot;\\d+ green&quot;</span><span class="op">)</span>,</span>
+<span>      blue <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span><span class="va">round_txt</span>, <span class="st">&quot;\\d+ blue&quot;</span><span class="op">)</span>,</span>
+<span>      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">red</span>, <span class="va">green</span>, <span class="va">blue</span><span class="op">)</span>, <span class="va">parse_number</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">df_rounds</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span></span>
+<span>      cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">red</span>, <span class="va">green</span>, <span class="va">blue</span><span class="op">)</span>, values_to <span class="op">=</span> <span class="st">&quot;anz&quot;</span>, names_to <span class="op">=</span> <span class="st">&quot;color&quot;</span>,</span>
+<span>      values_drop_na <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre>
+</div>
+</div>
+<p>Our training data now looks like this:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code># A tibble: 35 × 4
+   game_nr round_txt              color   anz
+     &lt;dbl&gt; &lt;chr&gt;                  &lt;chr&gt; &lt;dbl&gt;
+ 1       1 3 blue, 4 red          red       4
+ 2       1 3 blue, 4 red          blue      3
+ 3       1 1 red, 2 green, 6 blue red       1
+ 4       1 1 red, 2 green, 6 blue green     2
+ 5       1 1 red, 2 green, 6 blue blue      6
+ 6       1 2 green                green     2
+ 7       2 1 blue, 2 green        green     2
+ 8       2 1 blue, 2 green        blue      1
+ 9       2 3 green, 4 blue, 1 red red       1
+10       2 3 green, 4 blue, 1 red green     3
+# ℹ 25 more rows</code></pre>
+</div>
+<p>With the data in this form, we can now answer both questions. First question:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class="va">cube_conundrum_1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df_rounds</span>, <span class="va">df_max_colors</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">df_rounds</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">df_max_colors</span>, by <span class="op">=</span> <span class="st">&quot;color&quot;</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">game_nr</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>possible <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="va">anz</span> <span class="op">&lt;=</span> <span class="va">max_anz</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre>
+</div>
+</div>
+<p>Second question:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class="va">cube_conundrum_2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df_rounds</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">df_rounds</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">game_nr</span>, <span class="va">color</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>min_anz <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">anz</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">&quot;drop_last&quot;</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">color</span>, values_from <span class="op">=</span> <span class="va">min_anz</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>power <span class="op">=</span> <span class="va">red</span> <span class="op">*</span> <span class="va">blue</span> <span class="op">*</span> <span class="va">green</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre>
+</div>
+</div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

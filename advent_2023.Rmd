@@ -39,7 +39,7 @@ library(tidyverse)
 In part one we are told to get the first and last digit from a string.
 Combine these and add them together.
 
-```{r, file=here::here("R", "trebuchet.R")}
+```{r, file="R/2023/01/trebuchet.R"}
 ```
 
 For the 'training' data this looks like this:
@@ -51,7 +51,7 @@ tar_read(df_trebuchet_train)
 For the second part, numbers can also be represented as words. The code
 for this solution looks like this:
 
-```{r, file="R/trebuchet_2.R"}
+```{r, file="R/2023/01/trebuchet_2.R"}
 ```
 
 For the training data the result looks like this:
@@ -59,3 +59,32 @@ For the training data the result looks like this:
 ```{r, echo=FALSE}
 tar_read(df_trebuchet_2_train)
 ```
+
+## Day 2
+
+First extract each game:
+
+```{r, file="R/2023/02/games.R"}
+```
+
+From the game data extract each round:
+
+```{r, file="R/2023/02/rounds.R"}
+```
+
+Our training data now looks like this:
+
+```{r, echo=FALSE}
+tar_read(df_rounds_train)
+```
+
+With the data in this form, we can now answer both questions. First question:
+
+```{r, file="R/2023/02/cube_conundrum_1.R"}
+```
+
+Second question:
+
+```{r, file="R/2023/02/cube_conundrum_2.R"}
+```
+
