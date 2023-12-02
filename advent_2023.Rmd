@@ -78,7 +78,12 @@ Our training data now looks like this:
 tar_read(df_rounds_train)
 ```
 
-With the data in this form, we can now answer both questions. First question:
+With the data in this form, we can now answer both questions.
+Join the known maximum number of cubes for each color:
+
+```{r, echo=FALSE}
+tar_read(df_max_colors)
+```
 
 ```{r, file="R/2023/02/cube_conundrum_1.R"}
 ```
