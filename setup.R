@@ -5,5 +5,6 @@ tar_option_set(
   packages = c(
     "conflicted",
     "tidyverse",
+    "tidygraph",
     "fs"
   ))

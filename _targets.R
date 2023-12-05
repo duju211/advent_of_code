@@ -34,5 +34,16 @@ list(
   tar_target(df_cube_conundrum_2_test, cube_conundrum_2(df_rounds_test)),
   tar_target(solution_day2_2, sum(df_cube_conundrum_2_test$power)),
   
+  #day5
+  tar_target(input_train_day5, read_lines("2023/05/train_1")),
+  tar_target(input_test_day5, read_lines("2023/05/test_1")),
+  tar_target(seeds, extract_seeds(input_test_day5)),
+  tar_target(df_seed_map, seed_map(input_test_day5)),
+  tar_target(df_seed_map_complete, seed_map_complete(df_seed_map)),
+  tar_target(
+    location_numbers,
+    location_number(df_seed_map_complete, seeds),
+    pattern = map(seeds)),
+  
   tar_render(advent_2023, "advent_2023.Rmd")) |>
   tar_hook_before(solve_conflicts(quiet = TRUE))
