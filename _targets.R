@@ -26,9 +26,13 @@ list(
     df_cube_conundrum_1_test,
     cube_conundrum_1(df_rounds_test, df_max_colors)),
   tar_target(
+    solution_day2_1,
+    sum(df_cube_conundrum_1_test$game_nr[df_cube_conundrum_1_test$possible])),
+  tar_target(
     df_cube_conundrum_2_train,
     cube_conundrum_2(df_rounds_train)),
   tar_target(df_cube_conundrum_2_test, cube_conundrum_2(df_rounds_test)),
+  tar_target(solution_day2_2, sum(df_cube_conundrum_2_test$power)),
   
   tar_render(advent_2023, "advent_2023.Rmd")) |>
   tar_hook_before(solve_conflicts(quiet = TRUE))
